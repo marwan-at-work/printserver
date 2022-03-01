@@ -42,6 +42,6 @@ func main() {
 			fmt.Println()
 		}
 		w.WriteHeader(*status)
-		w.Write([]byte(*body))
+		fmt.Fprintf(w, "%s\n", *body)
 	}))
 }
