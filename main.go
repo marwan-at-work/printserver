@@ -22,6 +22,7 @@ func main() {
 	flag.Parse()
 	fmt.Printf("listening on http://localhost:%s\n", *port)
 	http.ListenAndServe(":"+*port, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		start := time.Now()
 		fmt.Printf("%s: %s\n", r.Method, r.URL.String())
 		fmt.Println("Headers:")
 		for k := range r.Header {
@@ -49,5 +50,6 @@ func main() {
 		}
 		w.WriteHeader(*status)
 		fmt.Fprintf(w, "%s\n", *body)
+		fmt.Printf("response status: %d duration: %s\n", *status, time.Since(start))
 	}))
 }
