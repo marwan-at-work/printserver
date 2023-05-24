@@ -14,14 +14,14 @@ import (
 var (
 	status = flag.Int("status", 200, "response status to send")
 	body   = flag.String("body", "ok", "response body to send")
-	port   = flag.String("port", "4545", "port number the server runs on")
+	addr   = flag.String("addr", "127.0.0.1:4545", "server address to listen on")
 	wait   = flag.Duration("wait", 0, "simulate a longer response by sleeping for a duration")
 )
 
 func main() {
 	flag.Parse()
-	fmt.Printf("listening on http://localhost:%s\n", *port)
-	http.ListenAndServe(":"+*port, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	fmt.Printf("listening on http://%s\n", *addr)
+	http.ListenAndServe(*addr, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
 		fmt.Printf("%s: %s\n", r.Method, r.URL.String())
 		fmt.Println("Headers:")
